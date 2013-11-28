@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+var net = require('net');
+var os = require('os');
+var ip = require('ip');
+var shoe = require('shoe');
+var http = require('http');
+var Doc = require('bender-crdt');
+var reconnect = require('reconnect');
+
+var ifaces = os.networkInterfaces();
+var addresses = [];
+Object.keys(ifaces).forEach(function (key) {
+  Array.prototype.push.apply(addresses, ifaces[key]);
+});
+var ip = addresses.filter(function (address) {
+  return !address.internal && ip.isPrivate(address.address);
+});
+
+var ecstatic = require('ecstatic')(__dirname + '/static');
+var version = require('../package.json').version;
+
+var doc = new Doc({ ttl: false });
+
+var server = http.createServer(ecstatic);
+server.listen(1731, function () {
+  doc.register({
+    app: 'bender-ui',
+    version: version,
+    host: ip,
+    port: server.address().port
+  });
+});
+
+var sock = shoe(function (stream) {
+  stream.pipe(doc.createStream()).pipe(stream);
+});
+sock.install(server, '/bender-crdt');
