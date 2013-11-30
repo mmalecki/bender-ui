@@ -1,0 +1,21 @@
+{
+  "name": "bender-ui",
+  "version": "0.0.0",
+  "author": "Maciej Małecki <me@mmalecki.com>",
+  "scripts": {
+    "prepublish": "browserify public/js/*.js > public/js/bender-ui.js"
+  },
+  "devDependencies": {
+    "browserify": "~2.35.4"
+  },
+  "dependencies": {
+    "knockout": "~3.0.0",
+    "shoe": "0.0.15",
+    "bender-crdt": "~0.1.1",
+    "ip": "~0.1.0",
+    "ecstatic": "~0.4.12",
+    "bender": "~0.1.0",
+    "nconf": "~0.6.8",
+    "joke": "0.0.1-1"
+  }
+}

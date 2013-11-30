@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+var path = require('path');
+var shoe = require('shoe');
+var http = require('http');
+var nconf = require('nconf');
+var joke = require('joke')();
+var Bender = require('bender');
+var ecstatic = require('ecstatic');
+
+nconf.defaults({
+  'api-port': 1729,
+  'crdt-port': 1730,
+  'ui-port': 1731,
+  config: 'config/development.json'
+});
+
+nconf.file(nconf.get('config'));
+
+if (nconf.get('help')) {
+  console.log([
+    'usage: bender [options]\n',
+    'options:',
+    '  -a, --api-port   Port to start API on (default: 1729)',
+    '  -t, --crdt-port  Port to start CRDT on (default: 1730)',
+    '  -u, --ui-port    Port to start UI on (default: 1731)',
+    '  -c, --config     Config file to use (default: config/development.json)',
+    '  -p, --peer       Add a peer, for example --peer 10.0.0.1:1729',
+    '  -h, --help       You\'re staring at it'
+  ].join('\n') + '\n');
+  process.exit();
+}
+
+joke
+  .pipe(joke.stringify())
+  .pipe(process.stdout);
+
+bender = new Bender({ log: joke.log.bind(joke) });
+
+bender.api.listen(nconf.get('api-port'), function () {
+  joke.info('Bender API listening on ' + bender.api.address().port);
+});
+
+bender.crdt.listen(nconf.get('crdt-port'), function () {
+  joke.info('Bender CRDT listening on ' + bender.crdt.address().port);
+});
+
+var peers = (nconf.get('peers') || []).concat(nconf.get('peer') || []).map(function (peer) {
+  if (typeof peer === 'object') {
+    return peer;
+  }
+
+  if (typeof peer === 'string') {
+    peer = peer.split(':');
+    return { host: peer[0], port: parseInt(peer[1], 10) };
+  }
+
+  console.error('Peer has to be either an object or a string');
+  process.exit(1);
+});
+
+bender.connect(peers);
+
+var server = http.createServer(ecstatic(path.join(__dirname, '..', 'public')));
+
+server.listen(nconf.get('ui-port'), function () {
+  joke.info('Bender UI listening on ' + server.address().port);
+});
+
+var sock = shoe(function (stream) {
+  stream.pipe(bender.doc.createStream()).pipe(stream);
+});
+sock.install(server, '/bender-crdt');

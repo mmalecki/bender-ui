@@ -1,0 +1,13 @@
+.flexbox {
+  display: flex;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -o-flex;
+  display: -ms-flex;
+  padding: 30px;
+}
+
+.flexbox section {
+  flex: 1;
+  margin: 10px;
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <link rel='stylesheet' href='/css/style.css' />
+    <title>Bender UI</title>
+  </head>
+  <body>
+    <div class='flexbox'>
+      <section>
+        <h1>Frontends</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Backend</th>
+            </tr>
+          </thead>
+          <tbody data-bind="foreach: frontends">
+            <tr>
+              <td data-bind="text: name"></td>
+              <td data-bind="text: backend"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h1>Registrations</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>App</th>
+              <th>Version</th>
+            </tr>
+          </thead>
+          <tbody data-bind="foreach: registrations">
+            <tr>
+              <td data-bind="text: app"></td>
+              <td data-bind="text: version"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h1>Backends</h1>
+      </section>
+    </div>
+    <script src='/js/bender-ui.js'></script>
+  </body>
+</html>
