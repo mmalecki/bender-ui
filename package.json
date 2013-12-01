@@ -16,6 +16,7 @@
     "ecstatic": "~0.4.12",
     "bender": "~0.1.0",
     "nconf": "~0.6.8",
-    "joke": "0.0.1-1"
+    "joke": "0.0.1-1",
+    "knockout-crdt-observable-array": "~0.1.0"
   }
 }

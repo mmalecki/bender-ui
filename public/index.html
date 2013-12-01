@@ -30,19 +30,32 @@
           <thead>
             <tr>
               <th>App</th>
-              <th>Version</th>
+              <th>Host</th>
             </tr>
           </thead>
           <tbody data-bind="foreach: registrations">
             <tr>
-              <td data-bind="text: app"></td>
-              <td data-bind="text: version"></td>
+              <td data-bind="text: app + '@' + version"></td>
+              <td data-bind="text: host + ':' + port"></td>
             </tr>
           </tbody>
         </table>
       </section>
       <section>
         <h1>Backends</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>App</th>
+            </tr>
+          </thead>
+          <tbody data-bind="foreach: backends">
+            <tr>
+              <td data-bind="text: name"></td>
+              <td data-bind="text: app + '@' + version"></td>
+            </tr>
+          </tbody>
       </section>
     </div>
     <script src='/bundle.js'></script>
