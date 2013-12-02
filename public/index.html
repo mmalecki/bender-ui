@@ -54,7 +54,7 @@
             </tr>
           </thead>
           <tbody data-bind="foreach: backends">
-            <tr>
+            <tr data-bind='click: $parent.editBackend'>
               <td data-bind="text: name"></td>
               <td data-bind="text: appVersion"></td>
             </tr>
@@ -65,7 +65,7 @@
           <table>
             <tr>
               <td width='40%'>Name</td>
-              <td><input type='text' id='backend-name' data-bind='value: backend().name'/></td>
+              <td><input type='text' id='backend-name' data-bind='value: backend().name, disable: editingBackend'/></td>
             </tr>
             <tr>
               <td>App</td>

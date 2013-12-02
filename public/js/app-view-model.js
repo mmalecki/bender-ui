@@ -29,10 +29,14 @@ var AppViewModel = function () {
     return apps;
   });
 
-  this.backend = ko.observable(new Backend({}));
-
   this.version = version;
-  // So. Yeah. That was easy.
+
+  this.backend = ko.observable(new Backend({}));
+  this.editingBackend = ko.observable(false);
+  this.editBackend = function (backend) {
+    self.backend(backend);
+    self.editingBackend(true);
+  };
 };
 
 AppViewModel.prototype.saveBackend = function () {
