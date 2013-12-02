@@ -7,6 +7,15 @@ var joke = require('joke')();
 var Bender = require('bender');
 var ecstatic = require('ecstatic');
 
+nconf
+  .argv({
+    help:        { alias: 'h' },
+    peer:        { alias: 'p' },
+    'api-port':  { alias: 'a' },
+    'crdt-port': { alias: 't' },
+    config:      { alias: 'c' }
+  });
+
 nconf.defaults({
   'api-port': 1729,
   'crdt-port': 1730,
