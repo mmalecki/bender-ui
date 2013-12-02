@@ -11,3 +11,16 @@
   flex: 1;
   margin: 10px;
 }
+
+section {
+  font-family: arial;
+  text-align: left;
+}
+
+section table {
+  width: 100%;
+}
+
+section h1 {
+  font-family: georgia;
+}
