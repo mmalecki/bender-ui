@@ -6,6 +6,9 @@
     <title>Bender UI</title>
   </head>
   <body>
+    <header>
+      <h1>Bender</h1>
+    </header>
     <div class='flexbox'>
       <section>
         <h1>Frontends</h1>
@@ -53,11 +56,33 @@
           <tbody data-bind="foreach: backends">
             <tr>
               <td data-bind="text: name"></td>
-              <td data-bind="text: app + '@' + version"></td>
+              <td data-bind="text: appVersion"></td>
             </tr>
           </tbody>
+        </table>
+
+        <form action='#' data-bind='submit: saveBackend'>
+          <table>
+            <tr>
+              <td width='40%'>Name</td>
+              <td><input type='text' id='backend-name' data-bind='value: backend().name'/></td>
+            </tr>
+            <tr>
+              <td>App</td>
+              <td>
+                <select id='backend-app' data-bind='options: apps(), value: backend().appVersion'>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <input type='submit' value='Save' />
+        </form>
       </section>
     </div>
+
+    <footer>
+      <p>bender-ui@<span data-bind="text: version"></span></p>
+    </footer>
     <script src='/bundle.js'></script>
   </body>
 </html>

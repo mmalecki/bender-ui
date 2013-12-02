@@ -5,7 +5,6 @@ var crdtObservableArray = require('knockout-crdt-observable-array');
 var Registration = require('./registration.js');
 var Frontend = require('./frontend.js');
 var Backend = require('./backend.js');
-var App = require('./app.js');
 var version = require('../../package.json').version;
 
 var AppViewModel = function () {
@@ -30,8 +29,15 @@ var AppViewModel = function () {
     return apps;
   });
 
+  this.backend = ko.observable(new Backend({}));
+
   this.version = version;
   // So. Yeah. That was easy.
+};
+
+AppViewModel.prototype.saveBackend = function () {
+  var backend = ko.toJS(this.backend());
+  this.doc.set('backend/' + backend.name, backend);
 };
 
 var app = new AppViewModel();
