@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 var path = require('path');
-var shoe = require('shoe');
 var http = require('http');
 var nconf = require('nconf');
 var joke = require('joke')();
 var Bender = require('bender');
 var ecstatic = require('ecstatic');
+var ws = require('ws');
+var websocket = require('websocket-stream');
 
 nconf
   .argv({
@@ -70,12 +71,13 @@ var peers = (nconf.get('peers') || []).concat(nconf.get('peer') || []).map(funct
 bender.connect(peers);
 
 var server = http.createServer(ecstatic(path.join(__dirname, '..', 'public')));
+var wss = new ws.Server({ server: server });
+wss.on('connection', function (ws) {
+  joke.info('WebSocket connection accepted');
+  var stream = websocket(ws);
+  stream.pipe(bender.doc.createStream()).pipe(stream);
+});
 
 server.listen(nconf.get('ui-port'), function () {
   joke.info('Bender UI listening on ' + server.address().port);
 });
-
-var sock = shoe(function (stream) {
-  stream.pipe(bender.doc.createStream()).pipe(stream);
-});
-sock.install(server, '/bender-crdt');

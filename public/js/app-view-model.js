@@ -1,5 +1,5 @@
 var ko = require('knockout');
-var shoe = require('shoe');
+var ws = require('websocket-stream');
 var Doc = require('bender-crdt');
 var crdtObservableArray = require('knockout-crdt-observable-array');
 var Registration = require('./registration.js');
@@ -11,8 +11,8 @@ var AppViewModel = function () {
   var self = this;
 
   this.doc = new Doc({ ttl: false });
-  this.shoe = shoe('/bender-crdt');
-  this.shoe.pipe(this.doc.createStream()).pipe(this.shoe);
+  this.ws = ws('ws://' + window.location.host + '/bender-crdt');
+  this.ws.pipe(this.doc.createStream()).pipe(this.ws);
 
   this.backends = crdtObservableArray(this.doc.backends, Backend);
   this.frontends = crdtObservableArray(this.doc.frontends, Frontend);
