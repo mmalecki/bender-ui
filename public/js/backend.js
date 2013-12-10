@@ -3,9 +3,14 @@ var ko = require('knockout');
 var Backend = module.exports = function (data) {
   var self = this;
 
-  this.name = ko.observable(data.name);
-  this.app = ko.observable(data.app);
-  this.version = ko.observable(data.version);
+  this.save = function () {
+    console.dir(arguments);
+  };
+
+
+  this.name = ko.observable(data && data.get('name'));
+  this.app = ko.observable(data && data.get('app'));
+  this.version = ko.observable(data && data.get('version'));
   this.resource = 'Backend';
 
   this.appVersion = ko.computed({
@@ -19,4 +24,7 @@ var Backend = module.exports = function (data) {
     },
     owner: self
   });
+
+  this.save = function () {
+  };
 };

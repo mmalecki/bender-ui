@@ -46,37 +46,32 @@
       </section>
       <section>
         <h1>Backends</h1>
-        <table>
-          <thead>
-            <tr>
-              <th width='50%'>Name</th>
-              <th>App</th>
-            </tr>
-          </thead>
-          <tbody data-bind="foreach: backends">
-            <tr data-bind='click: $parent.editBackend'>
-              <td data-bind="text: name"></td>
-              <td data-bind="text: appVersion"></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <form action='#' data-bind='submit: saveBackend'>
-          <table>
-            <tr>
-              <td width='40%'>Name</td>
-              <td><input type='text' id='backend-name' data-bind='value: backend().name, disable: editingBackend'/></td>
-            </tr>
-            <tr>
-              <td>App</td>
-              <td>
-                <select id='backend-app' data-bind='options: apps(), value: backend().appVersion'>
-                </select>
-              </td>
-            </tr>
-          </table>
-          <input type='submit' value='Save' />
-        </form>
+        <div data-bind='foreach: backends'>
+          <div class='backend'>
+            <table class='entity'>
+              <tr>
+                <td class='property-name' width='35%'>Name</td>
+                <td width='65%'><input type='text' data-bind='value: name' /></td>
+              </tr>
+              <tr>
+                <td class='property-name'>App</td>
+                <td>
+                  <select id='backend-app' data-bind='options: $parent.apps(), value: appVersion'>
+                  </select>
+                </td>
+              </tr>
+              <tr class='buttons'>
+                <td></td>
+                <td style='text-align: right'>
+                  <button data-bind='click: save'>Save</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class='buttons'>
+          <button data-bind='click: newBackend'>New</button>
+        </div>
       </section>
     </div>
 

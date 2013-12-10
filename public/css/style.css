@@ -63,6 +63,14 @@ td input, select {
   width: 100%;
 }
 
+.property-name {
+  font-weight: bold;
+}
+
+.buttons {
+  text-align: right;
+}
+
 input[type="submit"] {
   float: right;
 }

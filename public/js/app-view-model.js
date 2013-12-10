@@ -31,17 +31,9 @@ var AppViewModel = function () {
 
   this.version = version;
 
-  this.backend = ko.observable(new Backend({}));
-  this.editingBackend = ko.observable(false);
-  this.editBackend = function (backend) {
-    self.backend(backend);
-    self.editingBackend(true);
+  this.newBackend = function () {
+    self.backends.push(new Backend());
   };
-};
-
-AppViewModel.prototype.saveBackend = function () {
-  var backend = ko.toJS(this.backend());
-  this.doc.set('backend/' + backend.name, backend);
 };
 
 var app = new AppViewModel();

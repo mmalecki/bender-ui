@@ -16,7 +16,7 @@
     "bender": "~0.1.0",
     "nconf": "~0.6.8",
     "joke": "0.0.1-1",
-    "knockout-crdt-observable-array": "~0.1.0",
+    "knockout-crdt-observable-array": "~0.2.0",
     "websocket-stream": "~0.3.3",
     "ws": "~0.4.31"
   }
